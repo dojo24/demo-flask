@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type='images/jpg' href="https://images.craftsnherbs.com/bee/IMG_0990.jpg">
+    <link rel='stylesheet' href='https://beedevservices.github.io/beedev-css/framework/beedev.css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav>
+            {% block menu %} {% include 'menu.html' %} {% endblock menu %}
+        </nav>
+    </header>
+    <div class="message">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for m in messages %}
+                    <h5>{{m}}</h5>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <main>
+        <h1>Welcome {{user.firstName}} {{user.lastName}}</h1>
+        <div class="row">
+            <div class="column">
+                <h2>Here are things users like:</h2>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>User</th>
+                        <th>Agree</th>
+                        <th>Disagree</th>
+                    </tr>
+                    {% for like in likes %}
+                        <tr>
+                            <td>{{like.name}}</td>
+                            <td>{{like.description}}</td>
+                            {% for user in users %}
+                                {% if user.id == like.user_id %}
+                                    <td>{{user.username}}</td>
+                                {% endif %}
+                            {% endfor %}
+                            {% for userLike in userLikes %}
+                                {% for user in users %}
+                                    {% if user.id == userLike.user_id %}
+                                        {% if userLike.agreeCount == 1 %}
+                                            <td colspan="2">You Agreed</td>
+                                        {% else %}
+                                            <td colspan="2">You Disagreed</td>
+                                        {% endif %}
+                                    {% else %}
+                                        <td><form action="/like/agree/" method="post">
+                                            <input type="hidden" name="user_id" value="{{user.id}}">
+                                            <input type="hidden" name="like_id" id="{{like.id}}">
+                                            <input type="hidden" name="agreeCount" value="1">
+                                            {% for user in users %}
+                                                {% if user.id == like.user_id %}
+                                                <button>Agree with {{user.firstName}}</button>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </form></td>
+                                        <td><form action="/like/disagree/" method="post">
+                                            <input type="hidden" name="user_id" value="{{user.id}}">
+                                            <input type="hidden" name="like_id" id="{{like.id}}">
+                                            <input type="hidden" name="disagreeCount" value="1">
+                                            {% for user  in users %}
+                                                {% if user.id == like.user_id %}
+                                                <button>Disagree with {{user.firstName}}</button>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </form></td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="column">
+                <h2>Here are things users dislike:</h2>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>User</th>
+                        <th>Agree</th>
+                        <th>Disagree</th>
+                    </tr>
+                    {% for dislike in dislikes %}
+                        <tr>
+                            <td>{{dislike.name}}</td>
+                            <td>{{dislike.description}}</td>
+                            {% for user in users %}
+                                {% if user.id == dislike.user_id %}
+                                    <td>{{user.username}}</td>
+                                {% endif %}
+                            {% endfor %}
+                            <td><form action="/dislike/agree/" method="post">
+                                <input type="hidden" name="user_id" value="{{user.id}}">
+                                <input type="hidden" name="dislike_id" id="{{dislike.id}}">
+                                <input type="hidden" name="agreeCount" value="1">
+                                {% for user  in users %}
+                                    {% if user.id == dislike.user_id %}
+                                    <button>Agree with {{user.firstName}}</button>
+                                    {% endif %}
+                                {% endfor %}
+                            </form></td>
+                            <td><form action="/dislike/disagree/" method="post">
+                                <input type="hidden" name="user_id" value="{{user.id}}">
+                                <input type="hidden" name="dislike_id" id="{{dislike.id}}">
+                                <input type="hidden" name="disagreeCount" value="1">
+                                {% for user  in users %}
+                                    {% if user.id == dislike.user_id %}
+                                    <button>Agree with {{user.firstName}}</button>
+                                    {% endif %}
+                                {% endfor %}
+                            </form></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <h3>Add things you like</h3>
+                <form action="/like/create/" method='post'>
+                    <section>
+                        <label for="name">Name:</label>
+                        <input type="text" name="name">
+                    </section>
+                    <section>
+                        <label for="description">Description:</label>
+                        <textarea name="description" cols="30" rows="10"></textarea>
+                    </section>
+                    <input type="hidden" name="user_id" value='{{user.id}}'>
+                    <button>Add Like</button>
+                </form>
+            </div>
+            <div class="column">
+                <h3>Add things you dislike</h3>
+                <form action="/dislike/create/" method='post'>
+                    <section>
+                        <label for="name">Name:</label>
+                        <input type="text" name="name">
+                    </section>
+                    <section>
+                        <label for="description">Description:</label>
+                        <textarea name="description" cols="30" rows="10"></textarea>
+                    </section>
+                    <input type="hidden" name="user_id" value='{{user.id}}'>
+                    <button>Add Dislike</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js')}}"></script>
+</body>
+</html>

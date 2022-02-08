@@ -1,0 +1,52 @@
+a {
+  color: white;
+  text-decoration: none;
+}
+table,
+th,
+td,
+tr {
+  border: 1px solid white;
+}
+td,
+th {
+  padding: 1em;
+}
+tr {
+  margin: 0.5em;
+}
+body {
+  background-color: blue;
+  color: white;
+}
+body header {
+  margin: 2em;
+  width: 95%;
+}
+body header nav {
+  width: 95%;
+  justify-content: space-evenly;
+}
+body main {
+  padding: 1em;
+  width: 95%;
+}
+body main .row {
+  margin: 2em;
+  width: 95%;
+  justify-content: space-evenly;
+}
+body main .row form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+body main .row form section input,
+body main .row form section label {
+  margin: 0.5em;
+  padding: 0.5em;
+}
+body main .row .column {
+  margin: 2em;
+}

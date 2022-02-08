@@ -1,0 +1,56 @@
+a {
+    color: white;
+    text-decoration: none;
+}
+
+table, th, td, tr {
+    border: 1px solid white;
+}
+td, th {
+    padding: 1em;
+}
+tr {
+    margin: .5em;
+}
+
+body {
+    background-color: blue;
+    color: white;
+    
+    header {
+        margin: 2em;
+        width: 95%;
+        nav {
+            width: 95%;
+            justify-content: space-evenly;
+        }
+    }
+    main {
+        padding: 1em;
+        width: 95%;
+
+        .row {
+            margin: 2em;
+            width: 95%;
+            justify-content: space-evenly;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-end;
+
+                section {
+
+                    input, label {
+                        margin: .5em;
+                        padding: .5em;
+                    }
+                }
+            }
+            .column {
+                margin: 2em;
+            }
+        }
+    }
+}
