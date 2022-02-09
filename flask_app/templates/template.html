@@ -25,7 +25,46 @@
         {% endwith %}
     </div>
     <main>
-
+        <td><form action="/dislike/agree/" method="post">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <input type="hidden" name="dislikes_id" id="{{dislikes.id}}">
+            <input type="hidden" name="agreeCount" value="1">
+            {% for user  in users %}
+                {% if user.id == dislike.user_id %}
+                <button>Agree with {{user.firstName}}</button>
+                {% endif %}
+            {% endfor %}
+        </form></td>
+        <td><form action="/dislike/disagree/" method="post">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <input type="hidden" name="dislikes_id" value="{{dislikes.id}}">
+            <input type="hidden" name="disagreeCount" value="1">
+            {% for user  in users %}
+                {% if user.id == dislike.user_id %}
+                <button>Agree with {{user.firstName}}</button>
+                {% endif %}
+            {% endfor %}
+        </form></td>
+        <td><form action="/like/disagree/" method="post">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <input type="hidden" name="likes_id" id="{{like.id}}">
+            <input type="hidden" name="disagreeCount" value="1">
+            {% for user  in users %}
+                {% if user.id == like.user_id %}
+                <button>Disagree with {{user.firstName}}</button>
+                {% endif %}
+            {% endfor %}
+        </form></td>
+        <td><form action="/like/agree/" method="post">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <input type="hidden" name="likes_id" id="{{like.id}}">
+            <input type="hidden" name="agreeCount" value="1">
+            {% for user in users %}
+                {% if user.id == like.user_id %}
+                <button>Agree with {{user.firstName}}</button>
+                {% endif %}
+            {% endfor %}
+        </form></td>
     </main>
     <footer>
 

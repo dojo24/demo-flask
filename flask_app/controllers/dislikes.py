@@ -20,7 +20,7 @@ def createDislike():
 def userDislikeAgree():
     data = {
         'user_id': request.form['user_id'],
-        'dislike_id': request.form['dislike_id'],
+        'dislikes_id': request.form['dislikes_id'],
         'agreeCount': request.form['agreeCount']
     }
     User_Dislikes.saveAgree(data)
@@ -32,7 +32,7 @@ def userDislikeAgree():
 def userDislikeDisagree():
     data = {
         'user_id': request.form['user_id'],
-        'dislike_id': request.form['dislike_id'],
+        'dislikes_id': request.form['dislikes_id'],
         'disagreeCount': request.form['disagreeCount']
     }
     User_Dislikes.saveDisagree(data)

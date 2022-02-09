@@ -33,9 +33,9 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>User</th>
-                        <th>Agree</th>
-                        <th>Disagree</th>
+                        <th>Added By</th>
+                        <th>Vote</th>
+                        <th>Your Vote</th>
                     </tr>
                     {% for like in likes %}
                         <tr>
@@ -43,41 +43,21 @@
                             <td>{{like.description}}</td>
                             {% for user in users %}
                                 {% if user.id == like.user_id %}
-                                    <td>{{user.username}}</td>
+                                    <td>{{user.firstName}}</td>
                                 {% endif %}
                             {% endfor %}
-                            {% for userLike in userLikes %}
-                                {% for user in users %}
-                                    {% if user.id == userLike.user_id %}
+                            <td><a href="/like/{{like.id}}/view">View and vote</a></td>
+                            {% if userLikes %}
+                                {% for userLike in userLikes %}
+                                    {% if userLike.user_id == user.id and userLike.likes_id == like.id %}
                                         {% if userLike.agreeCount == 1 %}
                                             <td colspan="2">You Agreed</td>
                                         {% else %}
                                             <td colspan="2">You Disagreed</td>
                                         {% endif %}
-                                    {% else %}
-                                        <td><form action="/like/agree/" method="post">
-                                            <input type="hidden" name="user_id" value="{{user.id}}">
-                                            <input type="hidden" name="like_id" id="{{like.id}}">
-                                            <input type="hidden" name="agreeCount" value="1">
-                                            {% for user in users %}
-                                                {% if user.id == like.user_id %}
-                                                <button>Agree with {{user.firstName}}</button>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </form></td>
-                                        <td><form action="/like/disagree/" method="post">
-                                            <input type="hidden" name="user_id" value="{{user.id}}">
-                                            <input type="hidden" name="like_id" id="{{like.id}}">
-                                            <input type="hidden" name="disagreeCount" value="1">
-                                            {% for user  in users %}
-                                                {% if user.id == like.user_id %}
-                                                <button>Disagree with {{user.firstName}}</button>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </form></td>
                                     {% endif %}
                                 {% endfor %}
-                            {% endfor %}
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </table>
@@ -88,39 +68,19 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>User</th>
+                        <th>Added by</th>
                         <th>Agree</th>
                         <th>Disagree</th>
                     </tr>
                     {% for dislike in dislikes %}
                         <tr>
                             <td>{{dislike.name}}</td>
-                            <td>{{dislike.description}}</td>
+                            <td>{{dislike.name}}</td>
                             {% for user in users %}
                                 {% if user.id == dislike.user_id %}
-                                    <td>{{user.username}}</td>
+                                    <td>{{user.firstName}}</td>
                                 {% endif %}
                             {% endfor %}
-                            <td><form action="/dislike/agree/" method="post">
-                                <input type="hidden" name="user_id" value="{{user.id}}">
-                                <input type="hidden" name="dislike_id" id="{{dislike.id}}">
-                                <input type="hidden" name="agreeCount" value="1">
-                                {% for user  in users %}
-                                    {% if user.id == dislike.user_id %}
-                                    <button>Agree with {{user.firstName}}</button>
-                                    {% endif %}
-                                {% endfor %}
-                            </form></td>
-                            <td><form action="/dislike/disagree/" method="post">
-                                <input type="hidden" name="user_id" value="{{user.id}}">
-                                <input type="hidden" name="dislike_id" id="{{dislike.id}}">
-                                <input type="hidden" name="disagreeCount" value="1">
-                                {% for user  in users %}
-                                    {% if user.id == dislike.user_id %}
-                                    <button>Agree with {{user.firstName}}</button>
-                                    {% endif %}
-                                {% endfor %}
-                            </form></td>
                         </tr>
                     {% endfor %}
                 </table>
